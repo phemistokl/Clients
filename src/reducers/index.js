@@ -53,12 +53,11 @@ const InitialState = [
 	},
 ];
 
-function clients(state = InitialState, action) {
+function client(state = {}, action) {
 	switch (action.type) {
 		case 'CHANGE_CLIENT':
 		case 'ADD_CLIENT': {
-			return [
-				...state, {
+			return {
 					id: action.id,
 					name: action.name,
 					phone: action.phone,
@@ -68,8 +67,31 @@ function clients(state = InitialState, action) {
 					viewers: action.viewers,
 					abonement: action.abonement
 				}
+		}
+
+		case 'DELETE_CLIENT': {
+        return state.id !== action.id;
+    }
+
+		default: {
+			return state;
+		}
+	}
+};
+
+function clients(state = InitialState, action) {
+	switch (action.type) {
+		case 'CHANGE_CLIENT':
+		case 'ADD_CLIENT': {
+			return [
+				...state,
+				client(undefined, action)
 			];
 		}
+
+		case 'DELETE_CLIENT': {
+      return state.filter(item => client(item, action));
+    }
 
 		default: {
 			return state;
@@ -99,4 +121,4 @@ function form( state = { isOpen: false, newEntry: false }, action) {
     }
 };
 
-export default combineReducers({ clients, form });
+export default combineReducers({ client, clients, form });
