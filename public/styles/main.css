@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&subset=cyrillic,cyrillic-ext');
+body {
+  background: #f7f7f7;
+  font-family: 'Roboto', sans-serif;
+}
+.form-group {
+  /*width: 48%;*/
+  display: inline-block;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.main-group {
+  width: 60%;
+}
+.second-group {
+  width: 35%;
+}
+.form-group input {
+  border-radius: 20px;
+}
+.form-group button {
+  border-radius: 20px;
+}
+.btn-default.save {
+  width: 200px;
+  background: #c32630;
+  color: #ffffff;
+  margin-top: 25px;
+  height: 33px;
+}
+.show-grid {
+  margin-bottom: 20px;
+}
+.button {
+  cursor: pointer;
+  font-weight: bold;
+}
+.editClient {
+  cursor: pointer;
+}
+.deleteClient {
+  cursor: pointer;
+}
+.fa-plus-circle {
+  padding-right: 5px;
+}
+label {
+  color: #b1a4a4;
+}
+tr > th {
+  color: #b1a4a4;
+  text-align: center;
+}
+tr > td {
+  text-align: center;
+}
+.table>thead>tr>th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #bd9ca4;
+}
