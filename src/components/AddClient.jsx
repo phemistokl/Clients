@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import Row  from 'react-bootstrap/lib/Row';
 import Button from 'react-bootstrap/lib/Button';
 
-import { createClient, toggleForm } from '../actions';
+import { createClient, openForm } from '../actions';
 
 import Input from './Input.jsx';
 
-@connect(mapStateToProps, { createClient, toggleForm })
+@connect(mapStateToProps, { createClient, openForm })
 export default class AddClient extends Component {
     constructor(props) {
         super(props);
@@ -17,7 +17,7 @@ export default class AddClient extends Component {
 
     createClient() {
         this.props.createClient();
-        this.props.toggleForm();
+        this.props.openForm();
     }
 
     render() {

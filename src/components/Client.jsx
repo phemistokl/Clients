@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { editClient, deleteClient, toggleForm } from '../actions';
+import { currentClient, deleteClient, openForm } from '../actions';
 
-@connect(undefined, { editClient, deleteClient, toggleForm })
+@connect(undefined, { currentClient, deleteClient, openForm })
 export default class Client extends Component {
     constructor(props) {
         super(props);
 
-        this.editClient = this.editClient.bind(this);
+        this.currentClient = this.currentClient.bind(this);
         this.deleteClient = this.deleteClient.bind(this);
     }
 
-    editClient() {
-        this.props.editClient(this.props.id);
-        this.props.toggleForm();
-        console.log(this.props.id);
+    currentClient() {
+        this.props.currentClient(this.props.id);
+        this.props.openForm();
     }
 
     deleteClient() {
@@ -28,7 +27,7 @@ export default class Client extends Component {
 
           return (
             <tr>
-              <td><div className="editClient" onClick={this.editClient}><i className="fa fa-pencil" aria-hidden="true"></i></div></td>
+              <td><div className="editClient" onClick={this.currentClient}><i className="fa fa-pencil" aria-hidden="true"></i></div></td>
               <td><div className="deleteClient" onClick={this.deleteClient}><i className="fa fa-trash" aria-hidden="true"></i></div></td>
               <td>{name}</td>
               <td>{phone}</td>

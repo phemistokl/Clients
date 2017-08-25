@@ -12,13 +12,13 @@ export const addClient = client => {
 	};
 };
 
-export const changeClient = client => {
+export const updateClient = (id, client) => {
 	return {
-		type: "CHANGE_CLIENT",
+		type: "UPDATE_CLIENT",
 		id,
-		name,
-		phone,
-		email,
+		name: client.name,
+		phone: client.phone,
+		email: client.email,
 		date: "---",
 		summ: "---",
 		viewers: "---",
@@ -33,9 +33,15 @@ export const deleteClient = id => {
     };
 };
 
-export const toggleForm = () => {
+export const openForm = () => {
 		return {
-    		type: 'TOGGLE_FORM'
+    		type: 'OPEN_FORM'
+		};
+};
+
+export const closeForm = () => {
+		return {
+    		type: 'CLOSE_FORM'
 		};
 };
 
@@ -45,9 +51,9 @@ export const createClient = () => {
 		};
 };
 
-export const editClient = id => {
+export const currentClient = id => {
 		return {
-    		type: 'EDIT_CLIENT',
+    		type: 'CURRENT_CLIENT',
 				id
 		};
 };

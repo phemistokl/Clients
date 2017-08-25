@@ -2,23 +2,31 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Col  from 'react-bootstrap/lib/Col';
 
-import { addClient } from '../actions';
+import { addClient, closeForm, updateClient } from '../actions';
 
-@connect(undefined, { addClient })
+@connect(mapStateToFormProps, { addClient, closeForm, updateClient })
 export default class Input extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handlePhoneChange = this.handlePhoneChange.bind(this);
         this.handleMailChange = this.handleMailChange.bind(this);
         this.handleAddClient = this.handleAddClient.bind(this);
-    }
 
-    state = {
-        name: "",
-        phone: "",
-        email: ""
+        if (!this.props.newEntry) {
+              this.state = ({
+                name: props.name,
+                phone: props.phone,
+                email: props.email
+              });
+            } else {
+              this.state = ({
+                name: '',
+                phone: '',
+                email: ''
+              });
+        }
     }
 
     handleAddClient() {
@@ -28,10 +36,14 @@ export default class Input extends Component {
           email: this.state.email
       };
 
-      this.props.addClient(client);
-      this.setState({ name: "" });
-      this.setState({ phone: "" });
-      this.setState({ email: "" });
+      if (!this.props.newEntry) {
+          this.props.updateClient(this.props.id, client);
+      }
+      else {
+          this.props.addClient(client);
+      }
+
+      this.props.closeForm();
     }
 
     handleNameChange(e) {
@@ -92,4 +104,15 @@ export default class Input extends Component {
             </div>
         );
     }
+}
+
+function mapStateToFormProps(state) {
+  return {
+    id: state.clients.current[0].id,
+    name: state.clients.current[0].name,
+    phone: state.clients.current[0].phone,
+    email: state.clients.current[0].email,
+    isOpen: state.form.isOpen,
+    newEntry: state.form.newEntry
+  };
 }

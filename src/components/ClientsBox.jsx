@@ -53,6 +53,6 @@ export default class ClientsBox extends Component {
 
 function mapStateToProps(state) {
 	return {
-		clients: state.clients
+		clients: state.clients.clients
 	};
 }

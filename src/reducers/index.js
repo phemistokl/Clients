@@ -55,7 +55,6 @@ const InitialState = [
 
 function client(state = {}, action) {
 	switch (action.type) {
-		case 'CHANGE_CLIENT':
 		case 'ADD_CLIENT': {
 			return {
 					id: action.id,
@@ -69,6 +68,27 @@ function client(state = {}, action) {
 				}
 		}
 
+		case 'CURRENT_CLIENT': {
+        return state.id == action.id;
+    }
+
+		case 'UPDATE_CLIENT': {
+			if (state.id == action.id) {
+				return {
+						id: action.id,
+						name: action.name,
+						phone: action.phone,
+						email: action.email,
+						date: action.date,
+						summ: action.summ,
+						viewers: action.viewers,
+						abonement: action.abonement
+					}
+				} else {
+					return state
+				}
+    }
+
 		case 'DELETE_CLIENT': {
         return state.id !== action.id;
     }
@@ -79,18 +99,36 @@ function client(state = {}, action) {
 	}
 };
 
-function clients(state = InitialState, action) {
+function clients(state = { clients: InitialState, current: [{id: ""}] }, action) {
 	switch (action.type) {
-		case 'CHANGE_CLIENT':
 		case 'ADD_CLIENT': {
-			return [
-				...state,
-				client(undefined, action)
-			];
+			return {
+        ...state,
+        clients: [...state.clients,
+					client(undefined, action)
+				]
+      }
 		}
 
+		case 'CURRENT_CLIENT': {
+      return {
+				...state,
+				current: state.clients.filter(item => client(item, action))
+			}
+    }
+
+		case 'UPDATE_CLIENT': {
+      return {
+				...state,
+				clients: state.clients.map(item => client(item, action))
+			}
+    }
+
 		case 'DELETE_CLIENT': {
-      return state.filter(item => client(item, action));
+      return {
+				...state,
+				clients: state.clients.filter(item => client(item, action))
+			}
     }
 
 		default: {
@@ -101,17 +139,22 @@ function clients(state = InitialState, action) {
 
 function form( state = { isOpen: false, newEntry: false }, action) {
     switch(action.type) {
-      case 'TOGGLE_FORM':
+      case 'OPEN_FORM':
         return {
           ...state,
-          isOpen: !state.isOpen
+          isOpen: true
         };
+			case 'CLOSE_FORM':
+	        return {
+	          ...state,
+	          isOpen: false
+	        };
       case 'CREATE_CLIENT':
         return {
           ...state,
           newEntry: true
         };
-      case 'EDIT_CLIENT':
+      case 'CURRENT_CLIENT':
         return {
           ...state,
           newEntry: false
@@ -121,4 +164,4 @@ function form( state = { isOpen: false, newEntry: false }, action) {
     }
 };
 
-export default combineReducers({ client, clients, form });
+export default combineReducers({ clients, client, form });
